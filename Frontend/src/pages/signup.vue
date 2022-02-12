@@ -6,87 +6,88 @@
       <b-container>
 
         <b-row>
-          <b-col sm="2"></b-col>
-          <b-col sm="2">
-            <label>Email</label>
-          </b-col>
-          <b-col sm="5">
+          <b-col sm="4"></b-col>
+          <b-col sm="4">
+            <div class="text-start">
+              <label>Email</label>
+            </div>
             <b-form-input
               v-model="email"
               placeholder="Enter your email">
             </b-form-input>
           </b-col>
-          <b-col sm="2"></b-col>
+          <b-col sm="4"></b-col>
         </b-row>
 
         <b-row class="mt-3">
-          <b-col sm="2"></b-col>
-          <b-col sm="2">
-            <label>Password</label>
-          </b-col>
-          <b-col sm="5">
+          <b-col sm="4"></b-col>
+          <b-col sm="4">
+            <div class="text-start">
+              <label>Password</label>
+            </div>
             <b-form-input
               v-model="password"
               placeholder="Enter your password">
             </b-form-input>
           </b-col>
-          <b-col sm="2"></b-col>
+          <b-col sm="4"></b-col>
         </b-row>
 
         <b-row class="mt-3">
-          <b-col sm="2"></b-col>
-          <b-col sm="2">
-            <label>Confirm Password</label>
-          </b-col>
-          <b-col sm="5">
+          <b-col sm="4"></b-col>
+          <b-col sm="4">
+            <div class="text-start">
+              <label>Confirm Password</label>
+            </div>
             <b-form-input
               v-model="confirmPassword"
               placeholder="Confirm your password">
             </b-form-input>
           </b-col>
-          <b-col sm="2"></b-col>
+          <b-col sm="4"></b-col>
         </b-row>
 
         <b-row class="mt-3">
-          <b-col sm="2"></b-col>
-          <b-col sm="2">
-            <label>First Name</label>
-          </b-col>
-          <b-col sm="5">
+          <b-col sm="4"></b-col>
+          <b-col sm="4">
+            <div class="text-start">
+              <label>First Name</label>
+            </div>
             <b-form-input
               v-model="firstName"
               placeholder="First Name">
             </b-form-input>
           </b-col>
-          <b-col sm="2"></b-col>
+          <b-col sm="4"></b-col>
         </b-row>
 
         <b-row class="mt-3">
-          <b-col sm="2"></b-col>
-          <b-col sm="2">
-            <label>Last Name</label>
-          </b-col>
-          <b-col sm="5">
+          <b-col sm="4"></b-col>
+          <b-col sm="4">
+            <div class="text-start">
+              <label>Last Name</label>
+            </div>
             <b-form-input
               v-model="lastName"
               placeholder="Last Name">
             </b-form-input>
           </b-col>
-          <b-col sm="2"></b-col>
+          <b-col sm="4"></b-col>
         </b-row>
 
         <b-row class="mt-3">
-          <b-col sm="2"></b-col>
-          <b-col sm="2">
-            <label>Phone Number</label>
-          </b-col>
-          <b-col sm="5">
+          <b-col sm="4"></b-col>
+          <b-col sm="4">
+            <div class="text-start">
+              <label>Phone Number</label>
+            </div>
             <b-form-input
               v-model="phoneNumber"
+              type="tel"
               placeholder="Phone Number">
             </b-form-input>
           </b-col>
-          <b-col sm="2"></b-col>
+          <b-col sm="4"></b-col>
         </b-row>
 
       <b-row class="mt-5">

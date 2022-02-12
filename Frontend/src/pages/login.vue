@@ -6,10 +6,10 @@
       <b-form onsubmit="submit" class="mt-5">
         <b-row>
           <b-col sm="4"></b-col>
-          <b-col sm="1">
-            <label>Email</label>
-          </b-col>
-          <b-col sm="3">
+          <b-col sm="4">
+            <div class="text-start">
+              <label >Email</label>
+            </div>
             <b-form-input
                 v-model="email"
                 placeholder="Enter your email">
@@ -20,10 +20,10 @@
 
         <b-row class="mt-3">
           <b-col sm="4"></b-col>
-          <b-col sm="1">
-            <label>Password</label>
-          </b-col>
-          <b-col sm="3">
+          <b-col sm="4">
+            <div class="text-start">
+              <label>Password</label>
+            </div>
             <b-form-input
                 v-model="password"
                 placeholder="Enter your password">
