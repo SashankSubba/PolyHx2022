@@ -7,13 +7,16 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 import login from './pages/login.vue'
+import signup from './pages/signup'
 
 Vue.use(BootstrapVue)
 
 Vue.use(VueRouter)
 
 const routes = [
-  { path: '/', component: login}
+  { path: '/', component: login},
+  { path: '/signup', component: signup},
+
 ]
 
 const router = new VueRouter({
