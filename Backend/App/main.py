@@ -1,6 +1,7 @@
 from db import db_connect, auth_user
 from flask import Flask, request, redirect, url_for, flash, session
 from flask_cors import CORS
+import json
 
 RECORDING_FOLDER = '/recordings'
 ALLOWED_EXTENSIONS = {'mp3'}
@@ -22,8 +23,9 @@ def login():
     error = None
 
     if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
+        data = json.load(request.data)
+        username = data['username']
+        password = data['password']
         user = auth_user(conn, username, password).fetchone()
 
         if user is None:
