@@ -14,7 +14,7 @@ CORS(app, resources={r"*": {"origins": "*"}})
 
 @app.route("/")
 def index():
-    return "<p>Hello, World!</p>"
+    return "<p>Hello, Test succeeded!</p>"
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -23,20 +23,20 @@ def login():
     error = None
 
     if request.method == 'POST':
-        data = json.load(request.data)
-        username = data['username']
+        data = json.loads(request.data)
+        email = data['email']
         password = data['password']
-        user = auth_user(conn, username, password).fetchone()
+        user = auth_user(conn, email, password)
 
-        if user is None:
+        if user[0] == 0:
             error = 'Incorrect Login'
 
         if error is None:
-            session.clear()
-            session['user_id'] = user['id']
+            # session.clear()
+            # session['user_id'] = user['id']
             return redirect(url_for('index'))
-
-        flash(error)
+        else:
+            flash(error)
 
     return "<p>Hello, World!</p>"
 

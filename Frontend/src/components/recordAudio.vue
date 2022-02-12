@@ -101,7 +101,7 @@ export default {
     sendFileToFlask() {
       if (this.audioFile != null) {
         let formData = new FormData();
-        formData["recordingFile"] =  this.audioFile
+        formData["recordingFile"] = this.audioFile
         console.log(formData)
 
         axios.post("http://localhost:5000/recording", {

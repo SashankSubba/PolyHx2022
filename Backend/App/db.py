@@ -20,10 +20,9 @@ def db_init(conn):
 
 def auth_user(conn, username, password):
     cursor = conn.cursor()
-    query = f""" SELECT *
-                FROM user
-                WHERE username = {username} and password = {password}"""
-    return query
+    query = f" SELECT Count(*) FROM user WHERE username = '{username}' and password = '{password}'"
+    res = cursor.execute(query).fetchone()
+    return res
 
 
 if __name__ == '__main__':
