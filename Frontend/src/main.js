@@ -7,13 +7,19 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 import login from './pages/login.vue'
+import record from './pages/record.vue'
+import map from './pages/map.vue'
+import dashboard from './pages/dashboard.vue'
 
 Vue.use(BootstrapVue)
 
 Vue.use(VueRouter)
 
 const routes = [
-  { path: '/', component: login}
+  { path: '/', component: login},
+  { path: '/record', component: record},
+  { path: '/map', component: map},
+  { path: '/dashboard', component: dashboard}
 ]
 
 const router = new VueRouter({
