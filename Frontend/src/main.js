@@ -7,13 +7,18 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 import login from './pages/login.vue'
+import signup from './pages/signup'
+import recordAudio from "@/components/recordAudio";
 
 Vue.use(BootstrapVue)
 
 Vue.use(VueRouter)
 
 const routes = [
-  { path: '/', component: login}
+  { path: '/signup', component: signup},
+  { path: '/record', component: recordAudio},
+  { path: '/', component: login},
+
 ]
 
 const router = new VueRouter({
