@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import axios
+import axios from 'axios'
 
 export default {
   name: 'recordAudio',
