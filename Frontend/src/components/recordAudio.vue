@@ -30,7 +30,7 @@ export default {
         this.recorder.ondataavailable = (event) => {
           audioChunks.push(event.data)
 
-          let audioBlob = new Blob(audioChunks)
+          let audioBlob = new Blob(audioChunks, {'type': 'audio/mp3;'})
           let audioUrl = URL.createObjectURL(audioBlob)
           let audio = new Audio(audioUrl)
 
