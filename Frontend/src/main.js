@@ -14,8 +14,8 @@ Vue.use(BootstrapVue)
 Vue.use(VueRouter)
 
 const routes = [
-  { path: '/', component: login},
   { path: '/signup', component: signup},
+  { path: '/', component: login},
 
 ]
 
