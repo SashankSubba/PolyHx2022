@@ -10,22 +10,38 @@ export default {
   name: 'recordAudio',
   data() {
     return {
-      recorder: null
+      recorder: null,
+      audioBlob: null,
+      audioUrl: null,
+      audio: null
     }
   },
   methods: {
     startRecording() {
-      let audoRecorder = navigator.mediaDevices.getUserMedia({ audio: true });
+      let audioRecorder = navigator.mediaDevices.getUserMedia({audio: true});
 
-      audoRecorder.then((stream) => {
+      audioRecorder.then((stream) => {
+
         this.recorder = new MediaRecorder(stream);
-        this.recorder.ondataavailable = (e) => {
-           console.log(e)
+        this.recorder.start();
+
+        let audioChunks = []
+
+        this.recorder.ondataavailable = (event) => {
+          audioChunks.push(event.data)
+
+          let audioBlob = new Blob(audioChunks)
+          let audioUrl = URL.createObjectURL(audioBlob)
+          let audio = new Audio(audioUrl)
+
+          audio.play()
         };
       });
+
+
     },
     stopRecording() {
-      if (recorder != null){
+      if (this.recorder !== null) {
         this.recorder.stop()
       }
     }
