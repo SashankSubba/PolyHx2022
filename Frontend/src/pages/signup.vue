@@ -1,6 +1,6 @@
 <template>
   <div style="margin: 2rem">
-    <h1>Signup</h1>
+    <h1>Create Account</h1>
     <img src=../assets/logo.jpg width="10%">
     <b-form onsubmit="submit" class="mt-5">
       <b-container>
