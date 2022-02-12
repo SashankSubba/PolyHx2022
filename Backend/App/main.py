@@ -1,5 +1,5 @@
 from db import db_connect, auth_user
-from flask import Flask, request, redirect, url_for, flash, session
+from flask import Flask, request, redirect, url_for, flash, session, make_response
 from flask_cors import CORS
 import json
 
@@ -38,7 +38,9 @@ def login():
         else:
             flash(error)
 
-    return "<p>Hello, World!</p>"
+    return make_response(200)
+
+    # return "<p>Hello, World!</p>"
 
 @app.route("/recording", methods=['POST'])
 def post_audio():
