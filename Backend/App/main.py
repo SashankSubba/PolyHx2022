@@ -8,7 +8,7 @@ ALLOWED_EXTENSIONS = {'mp3'}
 
 app = Flask(__name__)
 app.config['RECORDING_FOLDER'] = RECORDING_FOLDER
-CORS(app)
+CORS(app, resources={r"*": {"origins": "*"}})
 
 @app.route("/")
 def index():

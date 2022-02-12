@@ -41,7 +41,8 @@ export default {
           let audio = new Audio(audioUrl)
 
           this.audioFile = new File([audioBlob], `recording.mp3`, {
-            type: audioBlob.type
+            type: audioBlob.type,
+            lastModified: Date.now()
           })
 
           this.audioUrl = audioUrl.replace("blob:", "")
@@ -99,13 +100,16 @@ export default {
     },
     sendFileToFlask() {
       if (this.audioFile != null) {
-
-        console.log(this.audioFile)
         let formData = new FormData();
-        formData.append("recordingFile", this.audioFile)
+        formData["recordingFile"] =  this.audioFile
+        console.log(formData)
 
         axios.post("http://localhost:5000/recording", {
           formData
+        }, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          }
         })
             .then((result) => {
               console.log(result)
