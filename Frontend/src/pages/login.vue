@@ -4,27 +4,31 @@
     <img src=../assets/logo.jpg width="10%">
     <b-form onsubmit="submit" class="mt-5">
         <b-row>
-          <b-col cols="5">
+          <b-col cols="4"></b-col>
+          <b-col cols="1">
             <label>Email</label>
           </b-col>
-          <b-col cols="5">
+          <b-col cols="3">
             <b-form-input
               v-model="email"
               placeholder="Enter your email">
             </b-form-input>
           </b-col>
+          <b-col cols="4"></b-col>
         </b-row>
 
-        <b-row>
-          <b-col cols="5">
+        <b-row class="mt-3">
+          <b-col cols="4"></b-col>
+          <b-col cols="1">
             <label>Password</label>
           </b-col>
-          <b-col cols="5">
+          <b-col cols="3">
             <b-form-input
               v-model="password"
-              placeholder="Enter your email">
+              placeholder="Enter your password">
             </b-form-input>
           </b-col>
+          <b-col cols="4"></b-col>
         </b-row>
 
       <b-row class="mt-5">
