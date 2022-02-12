@@ -1,7 +1,6 @@
 from db import db_connect, auth_user
 from flask import Flask, request, redirect, url_for, flash
 from flask_cors import CORS
-from werkzeug.utils import secure_filename
 
 RECORDING_FOLDER = '/recordings'
 ALLOWED_EXTENSIONS = {'mp3'}
@@ -31,10 +30,6 @@ def login():
         else:
             flash("failure")
 
-
-if __name__ == '__main__':
-    app.run(debug=True)
-
 @app.route("/recording", methods=['POST'])
 def post_audio():
     # check if the post request has the file part
@@ -53,3 +48,6 @@ def post_audio():
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+if __name__ == '__main__':
+    app.run(debug=True)
