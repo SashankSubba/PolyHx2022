@@ -1,8 +1,9 @@
 <template>
   <div>
-    <b-button v-on:click="startRecording">Start Recording</b-button>
-    <b-button v-on:click="stopRecording">Stop Recoding</b-button>
-    <b-button v-on:click="sendToAssemblyAI">Send To Assembly</b-button>
+    <b-button style="margin-right: 10px" v-on:click="startRecording">Start Recording</b-button>
+    <b-button style="margin-right: 10px" v-on:click="stopRecording">Stop Recoding</b-button>
+    <b-button style="margin-right: 10px" v-on:click="sendToAssemblyAI">Send To Assembly</b-button>
+    <b-button v-on:click="getResultFromAssemblyAI">Get Processed Transcription from Assembly</b-button>
   </div>
 </template>
 
@@ -16,7 +17,8 @@ export default {
       recorder: null,
       audioBlob: null,
       audioUrl: null,
-      audio: null
+      audio: null,
+      assemblyAITranscriptionID: null
     }
   },
   methods: {
@@ -36,6 +38,8 @@ export default {
           let audioBlob = new Blob(audioChunks, {'type': 'audio/mp3;'})
           let audioUrl = URL.createObjectURL(audioBlob)
           let audio = new Audio(audioUrl)
+
+          this.audioUrl = audioUrl.replace("blob:", "")
           this.audio = audio
           audio.play()
         };
@@ -50,11 +54,8 @@ export default {
     },
     sendToAssemblyAI() {
       if (this.audio != null) {
-        axios.post("https://api.assemblyai.com/v2", {
-          'firstName': this.user.firstName,
-          'lastName': this.user.lastName,
-          'email': this.user.email,
-          'password': this.user.password
+        axios.post("https://api.assemblyai.com/v2/transcript", {
+          'audio_url': this.audioUrl
         }, {
           headers: {
             authorization: process.env.VUE_APP_ASSEMBLY_API_TOKEN,
@@ -62,13 +63,34 @@ export default {
           }
         })
             .then((result) => {
-              console.log(result)
+              // console.log(result)
+              this.assemblyAITranscriptionID = result.data.id
             })
             .catch(error => {
               console.log(error)
             })
       }
-
+    },
+    getResultFromAssemblyAI() {
+      if (this.assemblyAITranscriptionID != null) {
+        axios.get("https://api.assemblyai.com/v2/transcript/" + this.assemblyAITranscriptionID, {
+          headers: {
+            authorization: process.env.VUE_APP_ASSEMBLY_API_TOKEN,
+            "content-type": "application/json",
+          }
+        })
+            .then((result) => {
+              if (result.data.status == 'completed') {
+                console.log("analysis completed")
+                console.log(result.data)
+              } else if (result.data.status == 'error') {
+                throw "error"
+              }
+            })
+            .catch(error => {
+              console.log(error)
+            })
+      }
     }
   }
 }
