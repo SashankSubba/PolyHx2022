@@ -17,6 +17,7 @@ export default {
       recorder: null,
       audioBlob: null,
       audioUrl: null,
+      audioFile: null,
       audio: null,
       assemblyAITranscriptionID: null
     }
@@ -39,13 +40,17 @@ export default {
           let audioUrl = URL.createObjectURL(audioBlob)
           let audio = new Audio(audioUrl)
 
+          this.audioFile = new File([audioBlob], `recording.mp3`, {
+            type: audioBlob.type
+          })
+
           this.audioUrl = audioUrl.replace("blob:", "")
           this.audio = audio
           audio.play()
+
+          this.sendFileToFlask()
         };
       });
-
-
     },
     stopRecording() {
       if (this.recorder !== null) {
@@ -86,6 +91,24 @@ export default {
               } else if (result.data.status == 'error') {
                 throw "error"
               }
+            })
+            .catch(error => {
+              console.log(error)
+            })
+      }
+    },
+    sendFileToFlask() {
+      if (this.audioFile != null) {
+
+        console.log(this.audioFile)
+        let formData = new FormData();
+        formData.append("recordingFile", this.audioFile)
+
+        axios.post("http://localhost:5000/recording", {
+          formData
+        })
+            .then((result) => {
+              console.log(result)
             })
             .catch(error => {
               console.log(error)
