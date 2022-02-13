@@ -1,15 +1,16 @@
 from db import db_connect, auth_user
 from flask import Flask, request, redirect, url_for, flash, session, make_response
 from flask_cors import CORS
+
 import json
+import os.path
 
 RECORDING_FOLDER = '/recordings'
 ALLOWED_EXTENSIONS = {'mp3'}
 
-
 app = Flask(__name__)
-app.config['RECORDING_FOLDER'] = RECORDING_FOLDER
 CORS(app, resources={r"*": {"origins": "*"}})
+uploads_dir = "uploads"
 
 
 @app.route("/")
@@ -45,19 +46,19 @@ def login():
 @app.route("/recording", methods=['POST'])
 def post_audio():
     # check if the post request has the file part
-    files = request.files
     file = request.files['file']
 
     if file.filename == '':
-            return 'No selected file'
+        return 'No selected file'
 
     if file and allowed_file(file.filename):
-        recording = request["file"]
-        print(recording)
+        file.save(os.path.join(uploads_dir, file.filename))
+        return 'successfully saved'
 
 def allowed_file(filename):
     return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+       filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
 
 if __name__ == '__main__':
     app.run(debug=True)
