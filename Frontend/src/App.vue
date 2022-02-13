@@ -28,6 +28,13 @@ html, body {
   height:100%;
   margin-top: 0;
 }
+body {
+  background: linear-gradient(to bottom,  #000000 0%, #000000 39.06%, #252525 76.56%, #3E3E3E 100%);
+    background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -36,14 +43,6 @@ html, body {
   color: #2c3e50;
   height:100%;
   margin-top: 0 !important;
-}
-.bg {
-  height: 100%;
-  background: linear-gradient(180deg,   #000000 0%, #000000 39.06%, #252525 76.56%, #3E3E3E 100%);
-  /* background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size: cover; */
 }
 .logo{
   display: inline-block;

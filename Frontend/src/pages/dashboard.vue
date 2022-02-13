@@ -13,7 +13,7 @@
             <b-form-tags class="input" v-model="post.tags" id="tag" size="lg" tag-variant="primary" separator=" " placeholder="Where it occured"></b-form-tags>
             <label style="font-size:x-large">Description</label>
             <b-form-textarea class="input" v-model="post.description" size="lg" id="description" placeholder="Write a post describing an encounter"></b-form-textarea>
-        <b-button variant="primary" style="font-size:x-large; float:right; margin-top:2rem">Submit</b-button>
+        <b-button variant="primary" style="font-size:x-large; float:right; margin-top:2rem" @click="submit">Submit</b-button>
         </b-card>
         <h3 class="mt-5" style="text-align:left; color:white">Other Posts</h3>
     </div>
@@ -30,6 +30,11 @@ export default {
             }
         }
     },
+    methods:{
+        submit() {
+            // post form to db
+        }
+    }
 }
 
 </script>
