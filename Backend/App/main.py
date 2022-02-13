@@ -45,16 +45,14 @@ def login():
 @app.route("/recording", methods=['POST'])
 def post_audio():
     # check if the post request has the file part
-    print(request)
-    if 'file' not in request.files:
-        return 'No file part'
+    files = request.files
+    file = request.files['file']
 
-    file = request.files['recording']
     if file.filename == '':
             return 'No selected file'
 
     if file and allowed_file(file.filename):
-        recording = request["recording"]
+        recording = request["file"]
         print(recording)
 
 def allowed_file(filename):

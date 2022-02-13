@@ -49,7 +49,7 @@ export default {
           this.audio = audio
           audio.play()
 
-          this.sendFileToFlask()
+          this.sendFileToFlask(audioBlob)
         };
       });
     },
@@ -98,19 +98,24 @@ export default {
             })
       }
     },
-    sendFileToFlask() {
-      if (this.audioFile != null) {
+    sendFileToFlask(audioBlob) {
+      if (audioBlob != null) {
         let formData = new FormData();
-        formData["recordingFile"] = this.audioFile
         console.log(formData)
+        formData.append('file', this.audioFile)
+        formData.append('file name', 'test')
 
-        axios.post("http://localhost:5000/recording", {
-          formData
-        }, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          }
-        })
+        // for (let pair of formData.entries()) {
+        //   console.log(pair[0] + ', ' + pair[1]);
+        // }
+
+        axios.post("http://localhost:5000/recording", formData,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              }
+            }
+        )
             .then((result) => {
               console.log(result)
             })
