@@ -1,4 +1,4 @@
-from db import db_connect, auth_user, get_emergency_contacts, post_encounter
+from db import db_connect, auth_user, get_emergency_contacts, post_encounter, get_locations
 from flask import Flask, request, redirect, url_for, flash, session, make_response
 from flask_cors import CORS
 from twilio.rest import Client
@@ -61,7 +61,18 @@ def login():
 
     return make_response(200)
 
-    # return "<p>Hello, World!</p>"
+
+@app.route('/locations', methods=['GET'])
+def get_all_locations():
+    conn = db_connect()
+    error = None
+
+    all_locations = get_locations(conn)
+
+    if error is None:
+        return all_locations
+    else:
+        return error
 
 
 @app.route("/recording", methods=['POST'])

@@ -51,6 +51,20 @@ def get_emergency_contacts(conn, phone_number):
     return list_of_numbers
 
 
+def get_locations(conn):
+    cursor = conn.cursor()
+    query = f"SELECT latitude, longitude FROM encounter;"
+    cursor.execute(query)
+    locations = cursor.fetchall()
+    list_of_locations = []
+    for location in locations:
+        list_of_locations.append({
+            "latitude": location[0],
+            "longitude": location[1]
+        })
+    return list_of_locations
+
+
 if __name__ == '__main__':
     conn = db_connect()
     db_init(conn)
