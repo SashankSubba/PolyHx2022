@@ -64,12 +64,38 @@ export default {
       },
       transcriptionId: null,
       audioTranscription: null,
-      sentiments: null
+      sentiments: null,
+      latitude: 0,
+      longitude: 0
     }
   },
   methods: {
     submit() {
       // post form to db
+
+      let sentimentTags = ""
+      this.sentiments.forEach( sentiment => {
+        sentimentTags += sentiment["sentiment"] + " "
+      })
+
+      axios.post("http://localhost:5000/encounter", {
+        'userId': Vue.$cookies.get('userId'),
+        'transcribedAudio': this.audioTranscription,
+        'sentimentTags': sentimentTags,
+        'transcriptionId': this.transcriptionId,
+        'latitude': this.latitude,
+        'longitude': this.longitude,
+        'resolved': this.post.resolved,
+        'isPrivate': this.post.isPrivate
+      }, {
+        'Content-Type': 'application/json',
+      })
+          .then((result) => {
+            console.log(result.data)
+          })
+          .catch(error => {
+            console.log(error)
+          })
     }
   },
   created() {

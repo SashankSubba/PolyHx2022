@@ -24,6 +24,7 @@ def auth_user(conn, email, password):
     cursor.execute(query)
     record = cursor.fetchone()
     user = {
+        "userId": record[0],
         "firstName": record[3],
         "lastName": record[4],
         "phoneNumber": record[5]
@@ -33,10 +34,9 @@ def auth_user(conn, email, password):
 
 def post_encounter(conn, data):
     cursor = conn.cursor()
-    query = f"""INSERT INTO encounter (userId, transcribedAudio, sentimentTags, latitude, longitude, resolved, isPrivate) VALUES
-                ({data.userId}, '{data.sentimentTags}', '{data.sentimentTags}', {data.latitude}, {data.longitude}, {data.resolved}, {data.isPrivate});"""
+    query = f"INSERT INTO encounter (userId, transcribedAudio, sentimentTags, latitude, longitude, resolved, isPrivate) VALUES ({data['userId']}, '{data['transcribedAudio']}', '{data['sentimentTags']}', {data['latitude']}, {data['longitude']}, {data['resolved']}, {data['isPrivate']});"
     cursor.execute(query)
-    cursor.commit()
+    conn.commit()
     return cursor.rowcount()
 
 

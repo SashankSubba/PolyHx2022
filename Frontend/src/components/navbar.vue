@@ -20,6 +20,7 @@ export default{
             Vue.$cookies.remove('firstName')
             Vue.$cookies.remove('lastName')
             Vue.$cookies.remove('number')
+            Vue.$cookies.remove('userId')
 
             location.href  = '/'
         }

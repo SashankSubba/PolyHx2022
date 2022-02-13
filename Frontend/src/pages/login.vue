@@ -73,8 +73,9 @@ export default {
             Vue.$cookies.set("firstName", result.data.firstName);
             Vue.$cookies.set("lastName", result.data.lastName);
             Vue.$cookies.set("number", result.data.phoneNumber);
+            Vue.$cookies.set("userId", result.data.userId);
 
-            this.$router.push('/dashboard');
+            this.$router.push('/record');
 
           })
           .catch(error => {
