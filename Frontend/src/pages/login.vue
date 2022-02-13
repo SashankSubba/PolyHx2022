@@ -49,6 +49,7 @@
 
 <script>
 import axios from 'axios'
+import Vue from "vue";
 
 export default {
   name: "login",
@@ -67,7 +68,12 @@ export default {
         'Content-Type': 'application/json'
       })
           .then((result) => {
-            console.log(result)
+            console.log(result.data)
+
+            Vue.$cookies.set("firstName", result.data.firstName);
+            Vue.$cookies.set("lastName", result.data.lastName);
+            Vue.$cookies.set("phoneNumber", result.data.phoneNumber);
+
             this.$router.push('/dashboard');
           })
           .catch(error => {

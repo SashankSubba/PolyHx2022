@@ -12,10 +12,14 @@ import map from './pages/map.vue'
 import dashboard from './pages/dashboard.vue'
 import signup from './pages/signup'
 import recordAudio from "@/components/recordAudio";
+import VueCookies from 'vue-cookies';
 
 Vue.use(BootstrapVue)
 
 Vue.use(VueRouter)
+Vue.use(VueCookies)
+
+Vue.$cookies.config('5h')
 
 const routes = [
   { path: '/', component: login},

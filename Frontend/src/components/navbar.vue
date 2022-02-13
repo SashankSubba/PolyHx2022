@@ -11,11 +11,17 @@
     </div>
 </template>
 <script>
+import Vue from "vue";
+
 export default{
     name:"navbar",
     methods: {
         logout() {
-            this.$router.push('/');
+            Vue.$cookies.remove('firstName')
+            Vue.$cookies.remove('lastName')
+            Vue.$cookies.remove('phoneNumber')
+
+            location.href  = '/'
         }
     },
 }
