@@ -37,7 +37,7 @@ def post_encounter(conn, data):
     query = f"INSERT INTO encounter (userId, transcribedAudio, sentimentTags, latitude, longitude, resolved, isPrivate) VALUES ({data['userId']}, '{data['transcribedAudio']}', '{data['sentimentTags']}', {data['latitude']}, {data['longitude']}, {data['resolved']}, {data['isPrivate']});"
     cursor.execute(query)
     conn.commit()
-    return cursor.rowcount()
+    return int(cursor.rowcount)
 
 
 def get_emergency_contacts(conn, phone_number):
