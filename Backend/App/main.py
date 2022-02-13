@@ -152,8 +152,9 @@ def getTranscriptionResult(transcription_id):
     response = requests.get(endpoint, headers=headers)
     json = response.json()
     text = json["text"]
-    sentiment_analysis_results = json["sentiment_analysis_results "]
+    sentiment_analysis_results = json["sentiment_analysis_results"]
     app.logger.info(json)
+    app.logger.info(text)
     app.logger.info(sentiment_analysis_results)
 
 def getSentimentAnalysis(audio_url):

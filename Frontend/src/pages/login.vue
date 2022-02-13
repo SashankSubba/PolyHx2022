@@ -67,7 +67,7 @@ export default {
         'Content-Type': 'application/json'
       })
           .then((result) => {
-            this.$router.push('/dashboard');
+            this.$router.push('/record');
             console.log(result)
           })
           .catch(error => {
