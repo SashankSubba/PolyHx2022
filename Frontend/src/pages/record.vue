@@ -1,4 +1,6 @@
 <template>
+<div>
+    <navbar />
     <div class="outerDiv">
         <div class="text">
             <p>Start recording now. Feel free to fake a phone call, describe your encounter, or discuss anything that you feel could help you.</p>
@@ -42,11 +44,16 @@
     </b-modal>
 
     </div>
+    </div>
 </template>
 
 <script>
+import navbar from "@/components/navbar.vue";
 export default{
     name: "Record",
+    components: {
+        navbar
+    },
     data() {
         return {
             recording: false,

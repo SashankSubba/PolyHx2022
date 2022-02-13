@@ -1,4 +1,6 @@
 <template>
+<div>
+    <navbar />
     <div class="outer">
         <b-card 
         header="Write a post"
@@ -17,10 +19,16 @@
         </b-card>
         <h3 class="mt-5" style="text-align:left; color:white">Other Posts</h3>
     </div>
+    </div>
 </template>
 <script>
+import navbar from "@/components/navbar.vue";
+
 export default {
     name: "Dashboard",
+    components: {
+        navbar
+    },
     data() {
         return {
             post: {

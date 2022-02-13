@@ -1,13 +1,13 @@
 <template>
   <div id="app">
   <div class="bg">
-  <img class="logo fixed" src="./assets/guardians-logo.jpg" @click="$router.push('/dashboard').catch(()=>{})"/>
+  <!-- <img class="logo fixed" src="./assets/guardians-logo.jpg" @click="$router.push('/dashboard').catch(()=>{})"/>
     <b-navbar toggable class="nav" type="dark">
         <b-navbar-nav style="width:100%" fill>
           <b-nav-item class="nav-item" href="/record">Record</b-nav-item>
           <b-nav-item class="nav-item" href="/map">Map</b-nav-item>
         </b-navbar-nav>
-    </b-navbar>
+    </b-navbar> -->
       <router-view></router-view>
   </div>
   </div>
@@ -44,7 +44,7 @@ body {
   height:100%;
   margin-top: 0 !important;
 }
-.logo{
+/* .logo{
   display: inline-block;
   margin: 0 auto 0 auto;
   height: 200px;
@@ -63,5 +63,5 @@ body {
     height:150px;
     margin: 0 auto 0 auto;
   }
-}
+} */
 </style>
