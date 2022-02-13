@@ -47,7 +47,7 @@ def login():
         email = data['email']
         password = data['password']
         user_obj = auth_user(conn, email, password)
-        app.logger.info(user_obj)
+
         if user_obj["firstName"] is None:
             error = 'Incorrect Login'
 
@@ -210,15 +210,14 @@ def post_sms():
     emergencyList = get_emergency_contacts(conn, phoneNum)
 
     for num in emergencyList:
-        message = client.messages \
-            .create(
-                body="!! ALERT FROM GUARDIAN !! \n" +
-                     name + " " + LName + " started an emergency recording.",
-                from_='+14388175458',
-                to=num
-            )
+        client.messages.create(
+            body="!! ALERT FROM GUARDIAN !! \n" +
+                 name + " " + LName + " started an emergency recording.",
+            from_='+14388175458',
+            to='+1'+num
+        )
 
-    return message.sid
+    return 'successfully sent SMS to all your emergency numbers'
 
 if __name__ == '__main__':
     app.run(debug=True)

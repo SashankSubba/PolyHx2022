@@ -72,7 +72,7 @@ export default {
 
             Vue.$cookies.set("firstName", result.data.firstName);
             Vue.$cookies.set("lastName", result.data.lastName);
-            Vue.$cookies.set("phoneNumber", result.data.phoneNumber);
+            Vue.$cookies.set("number", result.data.phoneNumber);
 
             this.$router.push('/dashboard');
           })

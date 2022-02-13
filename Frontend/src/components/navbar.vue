@@ -19,7 +19,7 @@ export default{
         logout() {
             Vue.$cookies.remove('firstName')
             Vue.$cookies.remove('lastName')
-            Vue.$cookies.remove('phoneNumber')
+            Vue.$cookies.remove('number')
 
             location.href  = '/'
         }
