@@ -62,19 +62,20 @@
 import navbar from "@/components/navbar.vue";
 import axios from "axios";
 import Vue from "vue";
-export default{
-    name: "Record",
-    components: {
-        navbar
-    },
-    data() {
-        return {
-            recording: false,
-            showModal: false,
-            next: false,
-            safe: false,
-            showMap: false,
-          recorder: null,
+
+export default {
+  name: "Record",
+  components: {
+    navbar
+  },
+  data() {
+    return {
+      recording: false,
+      showModal: false,
+      next: false,
+      safe: false,
+      showMap: false,
+      recorder: null,
       audioBlob: null,
       audioUrl: null,
       audioFile: null,
@@ -85,9 +86,13 @@ export default{
   created() {
     this.next = false;
     this.safe = false;
+    this.firstName = Vue.$cookies.get("firstName");
+    this.lastName = Vue.$cookies.get("lastName");
+    this.number = Vue.$cookies.get("number");
   },
   methods: {
     startRecording() {
+      this.sendSMS()
       this.recording = true
       let audioRecorder = navigator.mediaDevices.getUserMedia({audio: true});
 
@@ -189,35 +194,24 @@ export default{
             })
       }
     },
-    shareExperience(){
+    shareExperience() {
       this.showMap = true
       this.$router.push('/dashboard')
+    },
+    sendSMS() {
+      this.recording = true;
+      axios.post('http://localhost:5000/sms',
+          {
+            "firstName": this.firstName,
+            "lastName": this.lastName,
+            "number": this.number
+          }).then(result => {
+        console.log(result)
+      }).catch(error => {
+        console.log(error)
+      });
     }
   }
-        }
-    },
-    created() {
-        this.next=false;
-        this.safe = false;
-        this.firstName = Vue.$cookies.get("firstName");
-        this.lastName = Vue.$cookies.get("lastName");
-        this.number = Vue.$cookies.get("number");
-    },
-    methods: {
-        sendSMS(){
-            this.recording = true;
-            axios.post('http://localhost:5000/sms',
-                {
-                  "firstName": this.firstName,
-                  "lastName": this.lastName,
-                  "number": this.number
-                }).then(result => {
-                  console.log(result)
-            }).catch(error => {
-              console.log(error)
-            });
-        }
-    }
 }
 </script>
 <style scoped>
