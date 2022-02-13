@@ -1,4 +1,4 @@
-from db import db_connect, auth_user, get_emergency_contacts, post_encounter
+from db import db_connect, auth_user, get_emergency_contacts, post_encounter, get_locations
 from flask import Flask, request, redirect, url_for, flash, session, make_response
 from flask_cors import CORS
 from twilio.rest import Client
@@ -61,7 +61,19 @@ def login():
 
     return make_response(200)
 
-    # return "<p>Hello, World!</p>"
+
+@app.route('/locations', methods=['GET'])
+def get_all_locations():
+    conn = db_connect()
+    error = None
+
+    all_locations = get_locations(conn)
+
+    if error is None:
+        return { 'allLocations' : all_locations}
+    else:
+        return error
+
 
 @app.route("/recording", methods=['POST'])
 def post_audio():
@@ -81,8 +93,8 @@ def post_audio():
         audio_url = json['upload_url']
 
         json = {
-            "audio_url" : audio_url,
-            "sentiment_analysis" : "true"
+            "audio_url": audio_url,
+            "sentiment_analysis": "true"
         }
 
         headers = {
@@ -110,7 +122,7 @@ def post_audio():
         if status == "completed":
             getTranscriptionResult(transcription_id)
 
-        return 'successfully saved'
+        return transcription_id
 
 
 @app.route('/encounter', methods=['POST'])
@@ -133,9 +145,30 @@ def create_encounter():
         return error
 
 
+@app.route('/getProcessedAudio', methods=['POST'])
+def getProcessedAudio():
+    data = json.loads(request.data)
+    transcription_id = data["transcriptionId"]
+    status = checkAudioStatus(transcription_id)
+
+    while status != "completed":
+        app.logger.info("request is not completed yet")
+        time.sleep(5)
+        status = checkAudioStatus(transcription_id)
+        if status == "error":
+            app.logger.info("request failed")
+            return "Error processing transcription"
+
+    if status == "completed":
+        result = getTranscriptionResult(transcription_id)
+        return result
+
+    return "Text was not processed"
+
 def allowed_file(filename):
     return '.' in filename and \
-       filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
 
 def read_file(file_path, chunk_size=5242880):
     # app.logger.info('reading file: ' + file_path)
@@ -154,6 +187,7 @@ def postAudio(transcription_id):
     }
     response = requests.get(endpoint, headers=headers)
 
+
 def checkAudioStatus(transcription_id):
     endpoint = "https://api.assemblyai.com/v2/transcript/" + transcription_id
 
@@ -165,6 +199,7 @@ def checkAudioStatus(transcription_id):
     status = json['status']
     return status
 
+
 def getTranscriptionResult(transcription_id):
     endpoint = "https://api.assemblyai.com/v2/transcript/" + transcription_id
 
@@ -175,24 +210,26 @@ def getTranscriptionResult(transcription_id):
     response = requests.get(endpoint, headers=headers)
     json = response.json()
     text = json["text"]
-    sentiment_analysis_results = json["sentiment_analysis_results "]
+    sentiment_analysis_results = json["sentiment_analysis_results"]
     app.logger.info(json)
+    app.logger.info(text)
     app.logger.info(sentiment_analysis_results)
+    return { 'text' : text, 'sentiment' : sentiment_analysis_results}
 
 def getSentimentAnalysis(audio_url):
     endpoint = "https://api.assemblyai.com/v2/transcript/"
 
     headers = {
         "authorization": API_KEY,
-        'content-type':'application/json'
+        'content-type': 'application/json'
     }
 
     data = {
-        "audio_urk" : audio_url,
+        "audio_urk": audio_url,
         "sentiment_analysis": 'true'
     }
 
-    response = requests.get(endpoint, headers=headers,  data=data)
+    response = requests.get(endpoint, headers=headers, data=data)
     json = response.json()
     text = json["text"]
     app.logger.info(text)
@@ -214,10 +251,11 @@ def post_sms():
             body="!! ALERT FROM GUARDIAN !! \n" +
                  name + " " + LName + " started an emergency recording.",
             from_='+14388175458',
-            to='+1'+num
+            to='+1' + num
         )
 
     return 'successfully sent SMS to all your emergency numbers'
+
 
 if __name__ == '__main__':
     app.run(debug=True)

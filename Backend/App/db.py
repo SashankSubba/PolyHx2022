@@ -24,6 +24,7 @@ def auth_user(conn, email, password):
     cursor.execute(query)
     record = cursor.fetchone()
     user = {
+        "userId": record[0],
         "firstName": record[3],
         "lastName": record[4],
         "phoneNumber": record[5]
@@ -33,11 +34,10 @@ def auth_user(conn, email, password):
 
 def post_encounter(conn, data):
     cursor = conn.cursor()
-    query = f"""INSERT INTO encounter (userId, transcribedAudio, sentimentTags, latitude, longitude, resolved, isPrivate) VALUES
-                ({data.userId}, '{data.sentimentTags}', '{data.sentimentTags}', {data.latitude}, {data.longitude}, {data.resolved}, {data.isPrivate});"""
+    query = f"INSERT INTO encounter (userId, transcribedAudio, sentimentTags, latitude, longitude, resolved, isPrivate) VALUES ({data['userId']}, '{data['transcribedAudio']}', '{data['sentimentTags']}', {data['latitude']}, {data['longitude']}, {data['resolved']}, {data['isPrivate']});"
     cursor.execute(query)
-    cursor.commit()
-    return cursor.rowcount()
+    conn.commit()
+    return int(cursor.rowcount)
 
 
 def get_emergency_contacts(conn, phone_number):
@@ -49,6 +49,20 @@ def get_emergency_contacts(conn, phone_number):
     for row in records:
         list_of_numbers.append(row[0])
     return list_of_numbers
+
+
+def get_locations(conn):
+    cursor = conn.cursor()
+    query = f"SELECT latitude, longitude FROM encounter;"
+    cursor.execute(query)
+    locations = cursor.fetchall()
+    list_of_locations = []
+    for location in locations:
+        list_of_locations.append({
+            "latitude": location[0],
+            "longitude": location[1]
+        })
+    return list_of_locations
 
 
 if __name__ == '__main__':

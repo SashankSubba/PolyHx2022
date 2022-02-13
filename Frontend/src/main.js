@@ -13,11 +13,26 @@ import dashboard from './pages/dashboard.vue'
 import signup from './pages/signup'
 import recordAudio from "@/components/recordAudio";
 import VueCookies from 'vue-cookies';
+import VueGoogleHeatmap from 'vue-google-heatmap';
+// import * as VueGoogleMaps from 'vue2-google-maps';
 
 Vue.use(BootstrapVue)
 
 Vue.use(VueRouter)
 Vue.use(VueCookies)
+
+
+Vue.use(VueGoogleHeatmap, {
+  apiKey: process.env.VUE_APP_GOOGLE_MAPS_API,
+});
+
+// Vue.use(VueGoogleMaps, {
+//     load: {
+//         key: process.env.VUE_APP_GOOGLE_MAPS_API,
+//         libraries: 'places',
+//         installComponents: true,
+//     }
+// })
 
 Vue.$cookies.config('5h')
 
