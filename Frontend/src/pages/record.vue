@@ -80,7 +80,8 @@ export default {
       audioUrl: null,
       audioFile: null,
       audio: null,
-      assemblyAITranscriptionID: null
+      assemblyAITranscriptionID: null,
+      transcriptionId: null
     }
   },
   created() {
@@ -188,6 +189,8 @@ export default {
         )
             .then((result) => {
               console.log(result)
+              this.transcriptionId = result.data
+              Vue.$cookies.set('transcriptionId', result.data)
             })
             .catch(error => {
               console.log(error)
