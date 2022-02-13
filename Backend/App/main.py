@@ -75,7 +75,8 @@ def post_audio():
         audio_url = json['upload_url']
 
         json = {
-            "audio_url" : audio_url
+            "audio_url" : audio_url,
+            "sentiment_analysis" : "true"
         }
 
         headers = {
@@ -127,6 +128,7 @@ def postAudio(transcription_id):
 
 def checkAudioStatus(transcription_id):
     endpoint = "https://api.assemblyai.com/v2/transcript/" + transcription_id
+
     headers = {
         "authorization": API_KEY,
     }
@@ -141,7 +143,28 @@ def getTranscriptionResult(transcription_id):
     headers = {
         "authorization": API_KEY,
     }
+
     response = requests.get(endpoint, headers=headers)
+    json = response.json()
+    text = json["text"]
+    sentiment_analysis_results = json["sentiment_analysis_results "]
+    app.logger.info(json)
+    app.logger.info(sentiment_analysis_results)
+
+def getSentimentAnalysis(audio_url):
+    endpoint = "https://api.assemblyai.com/v2/transcript/"
+
+    headers = {
+        "authorization": API_KEY,
+        'content-type':'application/json'
+    }
+
+    data = {
+        "audio_urk" : audio_url,
+        "sentiment_analysis": 'true'
+    }
+
+    response = requests.get(endpoint, headers=headers,  data=data)
     json = response.json()
     text = json["text"]
     app.logger.info(text)
