@@ -61,20 +61,20 @@
 <script>
 import navbar from "@/components/navbar.vue";
 import axios from "axios";
-
-export default {
-  name: "Record",
-  components: {
-    navbar
-  },
-  data() {
-    return {
-      recording: false,
-      showModal: false,
-      next: false,
-      safe: false,
-      showMap: false,
-      recorder: null,
+import Vue from "vue";
+export default{
+    name: "Record",
+    components: {
+        navbar
+    },
+    data() {
+        return {
+            recording: false,
+            showModal: false,
+            next: false,
+            safe: false,
+            showMap: false,
+          recorder: null,
       audioBlob: null,
       audioUrl: null,
       audioFile: null,
@@ -194,6 +194,30 @@ export default {
       this.$router.push('/dashboard')
     }
   }
+        }
+    },
+    created() {
+        this.next=false;
+        this.safe = false;
+        this.firstName = Vue.$cookies.get("firstName");
+        this.lastName = Vue.$cookies.get("lastName");
+        this.number = Vue.$cookies.get("number");
+    },
+    methods: {
+        sendSMS(){
+            this.recording = true;
+            axios.post('http://localhost:5000/sms',
+                {
+                  "firstName": this.firstName,
+                  "lastName": this.lastName,
+                  "number": this.number
+                }).then(result => {
+                  console.log(result)
+            }).catch(error => {
+              console.log(error)
+            });
+        }
+    }
 }
 </script>
 <style scoped>
