@@ -88,7 +88,6 @@ export default {
             .then((result) => {
               if (result.data.status == 'completed') {
                 console.log("analysis completed")
-                console.log(result.data)
               } else if (result.data.status == 'error') {
                 throw "error"
               }
@@ -101,7 +100,6 @@ export default {
     sendFileToFlask(audioBlob) {
       if (audioBlob != null) {
         let formData = new FormData();
-        console.log(formData)
         formData.append('file', this.audioFile)
         formData.append('file name', 'test')
 
