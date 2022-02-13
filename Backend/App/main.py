@@ -70,7 +70,7 @@ def get_all_locations():
     all_locations = get_locations(conn)
 
     if error is None:
-        return all_locations
+        return { 'allLocations' : all_locations}
     else:
         return error
 
