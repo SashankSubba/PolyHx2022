@@ -33,7 +33,7 @@
           <div class="share-buttons safe-buttons">
             <b-button class="safe-no modal-btn" variant="danger" @click="$bvModal.hide('after'); next=false"> No
             </b-button>
-            <b-button class="safe-yes modal-btn" @click="showMap = true">Yes</b-button>
+            <b-button class="safe-yes modal-btn" @click="shareExperience">Yes</b-button>
           </div>
         </div>
         <div v-if="safe==false && next==true" style="padding:1rem;">
@@ -188,6 +188,10 @@ export default {
               console.log(error)
             })
       }
+    },
+    shareExperience(){
+      this.showMap = true
+      this.$router.push('/dashboard')
     }
   }
 }

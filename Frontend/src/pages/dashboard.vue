@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="p-4">
     <navbar/>
     <div class="outer">
       <b-card
