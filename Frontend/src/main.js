@@ -10,6 +10,8 @@ import login from './pages/login.vue'
 import record from './pages/record.vue'
 import map from './pages/map.vue'
 import dashboard from './pages/dashboard.vue'
+import signup from './pages/signup'
+import recordAudio from "@/components/recordAudio";
 
 Vue.use(BootstrapVue)
 
@@ -19,7 +21,9 @@ const routes = [
   { path: '/', component: login},
   { path: '/record', component: record},
   { path: '/map', component: map},
-  { path: '/dashboard', component: dashboard}
+  { path: '/dashboard', component: dashboard},
+  { path: '/signup', component: signup},
+  { path: '/record', component: recordAudio}
 ]
 
 const router = new VueRouter({
