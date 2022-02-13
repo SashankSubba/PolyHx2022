@@ -8,7 +8,7 @@
              <p>Don't worry, you're not alone.</p>
         </div>
         
-        <b-button v-if="!recording" pill size="lg" class="record-btn" @click="recording = true">Start Recording  
+        <b-button v-if="!recording" pill size="lg" class="record-btn" @click="sendSMS()">Start Recording  
             <img src="../assets/microphone.png" height="35px" class="record">
         </b-button>
         <b-button v-else pill class="stop-record" @click="recording = false; showModal = true">
@@ -68,7 +68,9 @@ export default{
         this.safe = false;
     },
     methods: {
-
+        sendSMS(){
+            this.recording = true; 
+        }
     }
 }
 </script>

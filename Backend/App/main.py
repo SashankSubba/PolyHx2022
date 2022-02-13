@@ -1,4 +1,4 @@
-from db import db_connect, auth_user
+from db import db_connect, auth_user, get_emergency_contacts, post_encounter
 from flask import Flask, request, redirect, url_for, flash, session, make_response
 from flask_cors import CORS
 from twilio.rest import Client
@@ -46,9 +46,9 @@ def login():
         data = json.loads(request.data)
         email = data['email']
         password = data['password']
-        user = auth_user(conn, email, password)
-
-        if user[0] == 0:
+        user_obj = auth_user(conn, email, password)
+        app.logger.info(user_obj)
+        if user_obj["firstName"] is None:
             error = 'Incorrect Login'
 
         if error is None:
@@ -56,7 +56,7 @@ def login():
             # session['user_id'] = user['id']
             return redirect(url_for('index'))
         else:
-            flash(error)
+            return error
 
     return make_response(200)
 
@@ -111,6 +111,27 @@ def post_audio():
 
         return 'successfully saved'
 
+
+@app.route('/encounter', methods=['POST'])
+def create_encounter():
+    conn = db_connect()
+    error = None
+
+    data = json.loads(request.data)
+    response = post_encounter(conn, data)
+
+    # check what the response look like
+    print("response", response)
+
+    if response <= 0:
+        error = 'Unable to post encounter.'
+
+    if error is None:
+        return redirect(url_for('index'))
+    else:
+        return error
+
+
 def allowed_file(filename):
     return '.' in filename and \
        filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -123,6 +144,7 @@ def read_file(file_path, chunk_size=5242880):
             if not data:
                 break
             yield data
+
 
 def postAudio(transcription_id):
     endpoint = "https://api.assemblyai.com/v2/transcript/" + transcription_id
@@ -175,11 +197,11 @@ def getSentimentAnalysis(audio_url):
     app.logger.info(text)
 
 
-@app.route("/sms", methods=['GET'])
+@app.route("/sms", methods=['POST'])
 def post_sms():
     conn = db_connect()
     error = None
-    client = Client(account_sid, auth_token)
+    client = Client(TWILIO_API_KEY, TWILIO_AUTH_TOKEN)
     data = json.loads(request.data)
     name = data['firstName']
     LName = data['lastName']
@@ -189,11 +211,11 @@ def post_sms():
     for num in emergencyList:
         message = client.messages \
             .create(
-            body="!! ALERT FROM GUARDIAN !! \n" +
-                 name + " " + LName + " started an emergency recording.",
-            from_='+14388175458',
-            to=num
-        )
+                body="!! ALERT FROM GUARDIAN !! \n" +
+                     name + " " + LName + " started an emergency recording.",
+                from_='+14388175458',
+                to=num
+            )
 
     return message.sid
 
