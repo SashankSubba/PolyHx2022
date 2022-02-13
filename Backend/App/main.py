@@ -1,6 +1,7 @@
 from db import db_connect, auth_user
 from flask import Flask, request, redirect, url_for, flash, session, make_response
 from flask_cors import CORS
+from twilio.rest import Client
 
 import json
 import os.path
@@ -17,6 +18,8 @@ CORS(app, resources={r"*": {"origins": "*"}})
 uploads_dir = "uploads"
 
 API_KEY = ''
+TWILIO_API_KEY = ''
+TWILIO_AUTH_TOKEN = ''
 config_path = os.path.join(app.root_path, 'config.yml')
 print(config_path)
 
@@ -25,6 +28,8 @@ with open(config_path, "r") as yamlfile:
     print("Read successful")
     print(data["ASSEMBLYAI_API_KEY"])
     API_KEY = data["ASSEMBLYAI_API_KEY"]
+    TWILIO_API_KEY = data["TWILIO_API_KEY"]
+    TWILIO_AUTH_TOKEN = data["TWILIO_AUTH_TOKEN"]
 
 
 @app.route("/")
@@ -168,6 +173,29 @@ def getSentimentAnalysis(audio_url):
     json = response.json()
     text = json["text"]
     app.logger.info(text)
+
+
+@app.route("/sms", methods=['GET'])
+def post_sms():
+    conn = db_connect()
+    error = None
+    client = Client(account_sid, auth_token)
+    data = json.loads(request.data)
+    name = data['firstName']
+    LName = data['lastName']
+    phoneNum = data['number']
+    emergencyList = get_emergency_contacts(conn, phoneNum)
+
+    for num in emergencyList:
+        message = client.messages \
+            .create(
+            body="!! ALERT FROM GUARDIAN !! \n" +
+                 name + " " + LName + " started an emergency recording.",
+            from_='+14388175458',
+            to=num
+        )
+
+    return message.sid
 
 if __name__ == '__main__':
     app.run(debug=True)
