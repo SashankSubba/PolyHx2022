@@ -30,7 +30,7 @@ html, body {
 }
 body {
   background: linear-gradient(to bottom,  #000000 0%, #000000 39.06%, #252525 76.56%, #3E3E3E 100%);
-    background-attachment: fixed;
+  background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
   height: 100vh;
