@@ -8,7 +8,7 @@
              <p>Don't worry, you're not alone.</p>
         </div>
         
-        <b-button v-if="!recording" pill size="lg" class="record-btn" @click="recording = true">Start Recording  
+        <b-button v-if="!recording" pill size="lg" class="record-btn" @click="sendSMS">Start Recording
             <img src="../assets/microphone.png" height="35px" class="record">
         </b-button>
         <b-button v-else pill class="stop-record" @click="recording = false; showModal = true">
@@ -49,6 +49,8 @@
 
 <script>
 import navbar from "@/components/navbar.vue";
+import axios from "axios";
+import Vue from "vue";
 export default{
     name: "Record",
     components: {
@@ -66,9 +68,24 @@ export default{
     created() {
         this.next=false;
         this.safe = false;
+        this.firstName = Vue.$cookies.get("firstName");
+        this.lastName = Vue.$cookies.get("lastName");
+        this.number = Vue.$cookies.get("number");
     },
     methods: {
-
+        sendSMS(){
+            this.recording = true;
+            axios.post('http://localhost:5000/sms',
+                {
+                  "firstName": this.firstName,
+                  "lastName": this.lastName,
+                  "number": this.number
+                }).then(result => {
+                  console.log(result)
+            }).catch(error => {
+              console.log(error)
+            });
+        }
     }
 }
 </script>

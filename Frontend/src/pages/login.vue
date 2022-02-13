@@ -8,7 +8,7 @@
           <b-col sm="4"></b-col>
           <b-col sm="4">
             <div class="text-start">
-              <label>Email</label>
+              <label style="color:white; float:left; font-size:large">Email</label>
             </div>
             <b-form-input
                 v-model="email"
@@ -23,7 +23,7 @@
           <b-col sm="4"></b-col>
           <b-col sm="4">
             <div class="text-start">
-              <label>Password</label>
+              <label style="color:white; float:left; font-size:large">Password</label>
             </div>
             <b-form-input
                 v-model="password"
@@ -37,8 +37,8 @@
         <b-row class="mt-5">
           <b-col sm="4"></b-col>
           <b-col sm="4">
-            <b-button style="margin-right: 20px" v-on:click="login">Login</b-button>
-            <b-link to="/signup">Create Profile</b-link>
+            <b-button style="margin-right: 20px; font-size:x-large" v-on:click="login">Login</b-button>
+            <b-link to="/signup" style="font-size:larger; color:white">Create Profile</b-link>
           </b-col>
           <b-col sm="4"></b-col>
         </b-row>
@@ -49,6 +49,7 @@
 
 <script>
 import axios from 'axios'
+import Vue from "vue";
 
 export default {
   name: "login",
@@ -67,8 +68,14 @@ export default {
         'Content-Type': 'application/json'
       })
           .then((result) => {
+            console.log(result.data)
+
+            Vue.$cookies.set("firstName", result.data.firstName);
+            Vue.$cookies.set("lastName", result.data.lastName);
+            Vue.$cookies.set("number", result.data.phoneNumber);
+
             this.$router.push('/dashboard');
-            console.log(result)
+
           })
           .catch(error => {
             console.log(error)
