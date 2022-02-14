@@ -30,7 +30,7 @@ Once dependencies are installed, you can run the backend server using the follow
 
 It should be accessible at `localhost:5000`
 
-To utilize the external services used in this application, you will need to create a copy of `config.yml` from `config.template.yml` and insert the required API keys.
+To utilize the external backend services in this application, you will need to create a copy of `config.yml` from `config.template.yml` and insert the required API keys.
 
 ## Frontend
 
@@ -44,4 +44,4 @@ Once dependencies are installed, you can run the server using the following comm
 
 It should be accessible at `localhost:8080`
 
-To utilize the external services used in this application, you will need to create `env.local` from `env.example` and insert the required API keys.
+To utilize the external frontend services in this application, you will need to create `env.local` from `env.example` and insert the required API keys.
