@@ -16,7 +16,7 @@ You can consult our [Devpost submission](https://devpost.com/software/guardians-
 
 ## Backend
 
-To run the Flask backend, you need to navigate to the Backend folder, start a venv and install the requirements:
+To run the Flask backend, you need to navigate to the Backend folder, start a virtualenv and install the requirements:
 
 ``pip install -r requirements.txt``
 
