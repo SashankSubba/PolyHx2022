@@ -1,5 +1,18 @@
-# PolyHx2022
+# Guardians - PolyHx2022
 
+![original](https://user-images.githubusercontent.com/27878892/153782716-3d3a13cb-da1c-45c3-b0f8-b13fbfa8679d.png)
+
+You can consult our [Devpost submission](https://devpost.com/software/guardians-12iszg) to learn more about our project and see a demo.
+
+## Technology Stack
+
+- VueJs
+- Flask
+- SQLite
+- BootstrapVue
+- Google Maps
+- Assembly AI
+- Twillio SMS
 
 ## Backend
 
