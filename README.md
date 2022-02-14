@@ -20,6 +20,8 @@ To run the Flask backend, you need to navigate to the Backend folder, start a ve
 
 ``pip install -r requirements.txt``
 
+The SQLite database needs to be created and seeded, therefore you need to run the SQL scripts in `schema.sql` and `tablePopulation.sql` in a local MySQL database.
+
 Once dependencies are installed, you can run the backend server using the following command:
 
 ``export FLASK_APP=main``
@@ -27,6 +29,8 @@ Once dependencies are installed, you can run the backend server using the follow
 ``flask run``
 
 It should be accessible at `localhost:5000`
+
+To utilize the external services used in this application, you will need to create a copy of `config.yml` from `config.template.yml` and insert the required API keys.
 
 ## Frontend
 
@@ -39,3 +43,5 @@ Once dependencies are installed, you can run the server using the following comm
 ``npm run serve``
 
 It should be accessible at `localhost:8080`
+
+To utilize the external services used in this application, you will need to create `env.local` from `env.example` and insert the required API keys.
